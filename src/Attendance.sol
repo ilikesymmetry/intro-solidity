@@ -17,6 +17,7 @@ contract Attendance {
         uint48 start;
         uint48 end;
         uint256 totalAttended;
+        bool canceled;
     }
 
     // Storage variables persist on contract and can be accessed anytime
@@ -50,6 +51,7 @@ contract Attendance {
      */
     event SessionCreated(uint256 sessionId, address creator, uint48 start, uint48 end);
     event SessionAttended(uint256 sessionId, address attendee);
+    event SessionCanceled(uint256 sessionId);
 
     /**
      * Errors can provide more context about why an execution failed
@@ -84,7 +86,7 @@ contract Attendance {
     /// @notice Check if a session is currently active.
     function isActive(uint256 sessionId) public view returns (bool) {
         Session memory session = sessions[sessionId];
-        return block.timestamp >= session.start && block.timestamp < session.end;
+        return block.timestamp >= session.start && block.timestamp < session.end && !session.canceled;
     }
 
     /// @notice Create a new session.
@@ -99,7 +101,7 @@ contract Attendance {
         sessionId = sessions.length;
 
         // Set both mapping value and increment sessions.length in storage
-        sessions.push(Session({start: start, end: end, totalAttended: 0}));
+        sessions.push(Session({start: start, end: end, totalAttended: 0, canceled: false}));
 
         // Emit log for offchain indexing
         emit SessionCreated(sessionId, msg.sender, start, end);
@@ -122,5 +124,18 @@ contract Attendance {
         totalAttendence[msg.sender]++;
         sessions[sessionId].totalAttended++;
         emit SessionAttended(sessionId, msg.sender);
+    }
+
+    /// @notice Cancel an active session.
+    function cancelSession(uint256 sessionId) external {
+        // Check sender is owner
+        if (msg.sender != owner) revert NotOwner(msg.sender, owner);
+
+        // Check session is active
+        if (!isActive(sessionId)) revert SessionNotActive(sessionId);
+
+        // Effects
+        sessions[sessionId].canceled = true;
+        emit SessionCanceled(sessionId);
     }
 }
