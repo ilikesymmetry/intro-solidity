@@ -12,7 +12,7 @@ contract Attendance {
      * string
      */
 
-    // Structs: objects that contain nested variables
+    // Structs are objects that contain nested variables
     struct Session {
         uint48 start;
         uint48 end;
@@ -23,15 +23,17 @@ contract Attendance {
     address public owner;
 
     /**
-     * Mappings: key-value hashmap
+     * Mappings are key-value hashmaps
+     *
      * conner => 2
      * xander => 0
      */
     mapping(address attendee => uint256 total) public totalAttendence;
 
     /**
-     * Arrays: mapping with length storage
-     * length: 2
+     * Arrays are mappings with length storage
+     *
+     * length = 2
      * 0 => Session({0, 1, 0})
      * 1 => Session({10, 20, 100})
      */
@@ -39,6 +41,7 @@ contract Attendance {
 
     /**
      * Mappings can be nested for multiple independent keys
+     *
      * 0 => conner => true
      * 1 => conner => true
      */
@@ -61,6 +64,7 @@ contract Attendance {
     error HasAttendedSession(uint256 sessionId, address sender);
     error SessionNotActive(uint256 sessionId);
 
+    // Constructors are run only when deploying a contract
     constructor() {
         // Set deployer as only account that can create sessions
         owner = msg.sender;
@@ -69,14 +73,16 @@ contract Attendance {
     /**
      * Function structure: name, arguments, visibility, mutability, return type
      *
-     * Visibility: Who can call
+     * Visibility defines who can call
+     *
      * internal: only this contract
      * external: only outside of this contract
      * public: both internal and external
      * private: internal but excludes inheriting contracts
      *
-     * Mutability: Access to storage
-     * (default): read+write access
+     * Mutability defines access to storage
+     *
+     * [none]: read+write access
      * view: read-only access
      * pure: no access
      */
