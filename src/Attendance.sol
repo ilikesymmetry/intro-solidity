@@ -61,6 +61,11 @@ contract Attendance {
     error HasAttendedSession(uint256 sessionId, address sender);
     error SessionNotActive(uint256 sessionId);
 
+    constructor() {
+        // Set deployer as only account that can create sessions
+        owner = msg.sender;
+    }
+
     /**
      * Function structure: name, arguments, visibility, mutability, return type
      *
