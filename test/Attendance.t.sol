@@ -8,7 +8,7 @@ contract AttendanceTest is Test {
     Attendance public attendance;
 
     function setUp() public {
-        attendance = new Attendance();
+        attendance = new Attendance(msg.sender);
     }
 
     function test_createSession_revert(uint48 start, uint48 end) public {

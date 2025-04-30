@@ -65,9 +65,8 @@ contract Attendance {
     error SessionNotActive(uint256 sessionId);
 
     // Constructors are run only when deploying a contract
-    constructor() {
-        // Set deployer as only account that can create sessions
-        owner = msg.sender;
+    constructor(address owner_) {
+        owner = owner_;
     }
 
     /**
