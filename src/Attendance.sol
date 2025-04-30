@@ -51,7 +51,7 @@ contract Attendance {
      * Events or "logs" can be emitted to enable easier offchain parsing of state changes
      * Events can have named arguments
      */
-    event SessionCreated(uint256 sessionId, address creator, uint48 start, uint48 end);
+    event SessionCreated(uint256 sessionId, uint48 start, uint48 end);
     event SessionAttended(uint256 sessionId, address attendee);
 
     /**
@@ -112,7 +112,7 @@ contract Attendance {
         sessions.push(Session({start: start, end: end, totalAttended: 0}));
 
         // Emit log for offchain indexing
-        emit SessionCreated(sessionId, msg.sender, start, end);
+        emit SessionCreated(sessionId, start, end);
     }
 
     /// @notice Attend an active session.
