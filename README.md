@@ -35,7 +35,7 @@ Make sure your account has testnet ETH!
 Run deploy script and verify contracts
 ```
 forge script Deploy \
-    --account [ACCOUNT_NAME] (e.g. "dev", set on `cast wallet import` from before) \
+    --account dev \
     --rpc-url "https://sepolia.base.org" \
     --broadcast \
     --verify \
