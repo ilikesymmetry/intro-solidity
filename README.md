@@ -25,21 +25,22 @@ forge build
 
 ## Deploy
 
-Create a CLI account
+Import your EOA into a CLI account
 ```
-cast wallet new
-```
-
-Encrypt this CLI account and store within foundry
-```
-cast wallet import dev --private-key [generated]
+cast wallet import dev --private-key [pk]
 ```
 
-Send testnet ETH to your CLI account
+Make sure your account has testnet ETH!
 
 Run deploy script and verify contracts
 ```
-forge script Deploy --rpc-url "https://sepolia.base.org" --account dev --sender [CLI account address]  --broadcast -vvvv --verify --verifier-url "https://api-sepolia.basescan.org/api" --etherscan-api-key $BASESCAN_API_KEY
+forge script Deploy \
+    --account [ACCOUNT_NAME] (e.g. "dev", set on `cast wallet import` from before) \
+    --rpc-url "https://sepolia.base.org" \
+    --broadcast \
+    --verify \
+    --verifier etherscan \
+    --etherscan-api-key $ETHERSCAN_API_KEY
 ```
 
-> Note: Etherscan seems to incorrectly give an error message `"Invalid API Key"` when deploying this exact Attendance contract.
+> Note: Etherscan can sometimes incorrectly give an error message `"Invalid API Key"` when deploying this exact Attendance contract.
