@@ -11,9 +11,7 @@ contract Deploy is Script {
     function run() public {
         vm.startBroadcast();
 
-        // address owner = msg.sender;
-        address owner = 0x0BFc799dF7e440b7C88cC2454f12C58f8a29D986; // EOA
-        // address owner = 0x2B654aB28f82a2a4E4F6DB8e20791E5AcF4125c6; // webapp wallet
+        address owner = 0x2B654aB28f82a2a4E4F6DB8e20791E5AcF4125c6; // my wallet
         new Attendance(owner);
 
         vm.stopBroadcast();
